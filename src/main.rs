@@ -12,7 +12,7 @@ async fn main() -> eframe::Result<()> {
     eframe::run_native(
         "eframe template",
         native_options,
-        Box::new(|cc| Box::new(yt_dl_gui::TemplateApp::new(cc))),
+        Box::new(|cc| Box::new(yt_dl_gui::App::new(cc))),
     )
 }
 
@@ -32,7 +32,7 @@ async fn main() {
         eframe::start_web(
             "the_canvas_id", // hardcode it
             web_options,
-            Box::new(|cc| Box::new(yt_dl_gui::TemplateApp::new(cc))),
+            Box::new(|cc| Box::new(yt_dl_gui::App::new(cc))),
         )
         .await
         .expect("failed to start eframe");

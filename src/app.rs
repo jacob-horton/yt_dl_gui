@@ -6,7 +6,7 @@ use std::{
 use rfd::FileDialog;
 use rustube::{tokio::sync::watch, Callback, Id, Video};
 use serde::{Deserialize, Serialize};
-use strum::{EnumIter, IntoEnumIterator};
+use strum::EnumIter;
 use tokio::sync::watch::Sender;
 
 async fn download<'a>(url: String, path: &PathBuf, tx: Sender<f32>) {
@@ -31,7 +31,7 @@ async fn download<'a>(url: String, path: &PathBuf, tx: Sender<f32>) {
 /// We derive Deserialize/Serialize so we can persist app state on shutdown.
 #[derive(Deserialize, Serialize)]
 #[serde(default)] // if we add new fields, give them default values when deserializing old state
-pub struct TemplateApp {
+pub struct App {
     url: String,
     download_type: DownloadType,
 
@@ -42,7 +42,7 @@ pub struct TemplateApp {
     value: Arc<Mutex<f32>>,
 }
 
-impl Default for TemplateApp {
+impl Default for App {
     fn default() -> Self {
         Self {
             url: "".to_owned(),
@@ -53,7 +53,7 @@ impl Default for TemplateApp {
     }
 }
 
-impl TemplateApp {
+impl App {
     /// Called once before the first frame.
     pub fn new(cc: &eframe::CreationContext<'_>) -> Self {
         // Load previous app state (if any).
@@ -92,7 +92,7 @@ impl ToString for DownloadType {
     }
 }
 
-impl eframe::App for TemplateApp {
+impl eframe::App for App {
     fn save(&mut self, storage: &mut dyn eframe::Storage) {
         eframe::set_value(storage, eframe::APP_KEY, self);
     }
